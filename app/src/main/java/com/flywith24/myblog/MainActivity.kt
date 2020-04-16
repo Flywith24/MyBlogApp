@@ -24,10 +24,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             settings.javaScriptEnabled = true
             //夜间模式
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                WebSettingsCompat.setForceDark(settings,
-                        if (getDarkModeStatus()) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF)
+                WebSettingsCompat.setForceDark(
+                    settings,
+                    if (getDarkModeStatus()) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
+                )
+            }
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+                //USER_AGENT_DARKENING_ONLY WEB_THEME_DARKENING_ONLY PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING
+                WebSettingsCompat.setForceDarkStrategy(settings,WebSettingsCompat.USER_AGENT_DARKENING_ONLY)
             }
         }
+
         webView.loadUrl("https://flywith24.gitee.io/")
 
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
